@@ -13,7 +13,7 @@ These notes are for:
   2. **Program to a supertype (interface), not an implementation**
   3. **Favor composition over inheritance**
 
-The running example and diagrams come from the SimUDuck story and the “weapons” design puzzle in the provided PDF (see especially pages **2–25** and **34**).
+The running example and diagrams come from the SimUDuck story and the “weapons” design puzzle in the provided book (see especially pages **2–25** and **34**).
 
 ---
 
@@ -36,7 +36,7 @@ By the end of the lesson, students should be able to:
 
 A design pattern is a **named, reusable solution template** for a recurring design problem.
 
-The PDF frames patterns as **experience reuse** rather than code reuse (p.1) and emphasizes that patterns help you handle the one constant in software development: **change** (p.8).
+The book frames patterns as **experience reuse** rather than code reuse (p.1) and emphasizes that patterns help you handle the one constant in software development: **change** (p.8).
 
 ### 2.1 Patterns are not libraries
 
@@ -92,7 +92,7 @@ Not all ducks should fly:
 - Decoy ducks (wooden) do not fly and may not quack.
 
 When `fly()` is placed in the superclass, *every* duck inherits it.  
-The PDF illustrates the demo disaster: rubber ducks flying across the screen (p.4).
+The book illustrates the demo disaster: rubber ducks flying across the screen (p.4).
 
 **Key lesson:** changing a superclass can produce **unexpected effects** in far-away subclasses.
 
@@ -128,7 +128,7 @@ Joe proposes removing `fly()` from `Duck` and instead using `Flyable` / `Quackab
 
 ### 6.2 What breaks
 
-The PDF points out the new problem: **duplicate code** (p.7).
+The book points out the new problem: **duplicate code** (p.7).
 
 Because Java interfaces (in the traditional sense) don’t provide shared implementation (ignoring modern default methods), every `Flyable` duck must implement flying itself.
 
@@ -146,7 +146,7 @@ We need a way to:
 
 ## 7) The three design principles introduced by the case study
 
-These principles are explicitly called out in the PDF and are the conceptual bridge to Strategy.
+These principles are explicitly called out in the book and are the conceptual bridge to Strategy.
 
 ### 7.1 Principle 1 — Encapsulate what varies
 
@@ -170,13 +170,13 @@ So we **extract** the variable behaviors into separate modules.
 - Fewer unintended consequences from changes.
 - Easier extension: add a new behavior without editing old duck classes.
 
-The PDF diagram on p.10 shows “pulling out” `fly` and `quack` into separate behavior class structures.
+The book diagram on p.10 shows “pulling out” `fly` and `quack` into separate behavior class structures.
 
 ---
 
 ### 7.2 Principle 2 — Program to a supertype, not an implementation
 
-The PDF clarifies “interface” here means **supertype**, not necessarily the Java `interface` keyword (p.12).
+The book clarifies “interface” here means **supertype**, not necessarily the Java `interface` keyword (p.12).
 
 **Idea:** the context should depend on *capabilities* and *contracts*, not concrete classes.
 
@@ -192,7 +192,7 @@ This enables polymorphism and reduces coupling.
 
 ### 7.3 Principle 3 — Favor composition over inheritance
 
-The PDF highlights a HAS‑A relationship: a duck **has a** fly behavior and **has a** quack behavior; it **delegates** to them (p.23).
+The book highlights a HAS‑A relationship: a duck **has a** fly behavior and **has a** quack behavior; it **delegates** to them (p.23).
 
 **Inheritance** is an IS‑A relationship (“a MallardDuck is-a Duck”).  
 **Composition** is a HAS‑A relationship (“a Duck has-a FlyBehavior”).
@@ -249,7 +249,7 @@ FlyWithWings FlyNoWay            Quack   Squeak  MuteQuack
 FlyRocketPowered
 ```
 
-This matches the “big picture” diagram of encapsulated behaviors in the PDF (p.22).
+This matches the “big picture” diagram of encapsulated behaviors in the book (p.22).
 
 
 ---
@@ -331,7 +331,7 @@ public class MuteQuack implements QuackBehavior {
 }
 ```
 
-The PDF shows this split into “families” of behaviors (p.13) and later explicitly calls them a “family of algorithms” (p.22).
+The book shows this split into “families” of behaviors (p.13) and later explicitly calls them a “family of algorithms” (p.22).
 
 ---
 
@@ -384,10 +384,10 @@ public class MallardDuck extends Duck {
 }
 ```
 
-The PDF walks through this idea using `MallardDuck` construction (p.16).
+The book walks through this idea using `MallardDuck` construction (p.16).
 
 > This still instantiates concrete strategies in the constructor.  
-> The PDF explicitly calls out that this is not ideal and hints that later patterns (e.g., factories/DI) can improve strategy creation (p.17).
+> The book explicitly calls out that this is not ideal and hints that later patterns (e.g., factories/DI) can improve strategy creation (p.17).
 
 ---
 
@@ -405,7 +405,7 @@ public void setQuackBehavior(QuackBehavior qb) {
 }
 ```
 
-This is demonstrated via `ModelDuck` and “rocket-powered flying” in the PDF (pp.20–21).
+This is demonstrated via `ModelDuck` and “rocket-powered flying” in the book (pp.20–21).
 
 #### Example context subtype: a model duck starts grounded
 
@@ -458,7 +458,7 @@ Expected behavior: the model duck initially cannot fly, then it gains rocket fli
 
 A single `FlyWithWings` can be reused by any “winged” duck without putting code in the superclass.
 
-The PDF emphasizes you get reuse “without the baggage” of inheritance (p.13).
+The book emphasizes you get reuse “without the baggage” of inheritance (p.13).
 
 ### 10.3 Open-Closed Principle (informal)
 
@@ -471,7 +471,7 @@ The setter-based approach creates a plug-in behavior model:
 - configure once (constructor),
 - or adapt at runtime (setters).
 
-The PDF explicitly highlights runtime switching (pp.11 and 20–21).
+The book explicitly highlights runtime switching (pp.11 and 20–21).
 
 ---
 
@@ -604,7 +604,7 @@ The behavior is interchangeable at runtime — exactly as Strategy requires.
 
 ### 11.3 Who owns strategy creation?
 
-Constructors like `new FlyWithWings()` in `MallardDuck` couple a duck subtype to a concrete strategy class (the PDF calls this out on p.17).
+Constructors like `new FlyWithWings()` in `MallardDuck` couple a duck subtype to a concrete strategy class (the book calls this out on p.17).
 
 Better alternatives (advanced, but worth mentioning):
 - dependency injection (DI),
@@ -661,7 +661,7 @@ These are useful in class to generalize beyond ducks.
 
 ## 13) In-class exercise: “Weapons” design puzzle (Strategy again)
 
-The PDF includes a second scenario: an action adventure game with characters that can change weapons dynamically (p.25).
+The book includes a second scenario: an action adventure game with characters that can change weapons dynamically (p.25).
 
 ### 13.1 Problem statement
 
@@ -696,7 +696,7 @@ Concrete contexts:
   King, Queen, Knight, Troll  (extend Character)
 ```
 
-The provided solution in the PDF confirms this structure and that weapon can be swapped via `setWeapon` defined on the abstract `Character` superclass (p.34).
+The provided solution in the book confirms this structure and that weapon can be swapped via `setWeapon` defined on the abstract `Character` superclass (p.34).
 
 ### 13.4 Skeleton code
 
@@ -739,7 +739,7 @@ public class King extends Character {
 }
 ```
 
-> Teaching point: the PDF notes that **any object** could implement `WeaponBehavior`, not only “weapons” in a literal sense (p.34).  
+> Teaching point: the book notes that **any object** could implement `WeaponBehavior`, not only “weapons” in a literal sense (p.34).  
 > This is a good moment to emphasize: strategies are “algorithms”, not “things”.
 
 ---
