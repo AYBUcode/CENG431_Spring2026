@@ -1,10 +1,10 @@
-# Strategy Pattern — Detailed Lecture Notes (English)
+# Strategy Pattern — Week 2
 
 ---
 
 ## 0) What this document is
 
-These notes are designed as a **classroom-ready** (lecture + lab) markdown handout for:
+These notes are for:
 
 - **Design patterns (intro)**
 - The **Strategy** design pattern
@@ -13,7 +13,7 @@ These notes are designed as a **classroom-ready** (lecture + lab) markdown hando
   2. **Program to a supertype (interface), not an implementation**
   3. **Favor composition over inheritance**
 
-The running example and diagrams come from the SimUDuck story and the “weapons” design puzzle in the provided PDF (see especially pages **2–25** and **34**). fileciteturn0file0
+The running example and diagrams come from the SimUDuck story and the “weapons” design puzzle in the provided PDF (see especially pages **2–25** and **34**).
 
 ---
 
@@ -36,16 +36,16 @@ By the end of the lesson, students should be able to:
 
 A design pattern is a **named, reusable solution template** for a recurring design problem.
 
-The PDF frames patterns as **experience reuse** rather than code reuse (p.1) and emphasizes that patterns help you handle the one constant in software development: **change** (p.8). fileciteturn0file0
+The PDF frames patterns as **experience reuse** rather than code reuse (p.1) and emphasizes that patterns help you handle the one constant in software development: **change** (p.8).
 
 ### 2.1 Patterns are not libraries
 
 A library gives you **implementation** you call.  
-A pattern gives you a **structure** you implement and adapt to your context (p.29). fileciteturn0file0
+A pattern gives you a **structure** you implement and adapt to your context (p.29).
 
 ### 2.2 Patterns are also a vocabulary
 
-The “diner” and “cubicle” stories show patterns as a **compression language**: you can say “Strategy” or “Observer” and communicate a set of structural expectations, constraints, and tradeoffs (pp.26–28). fileciteturn0file0
+The “diner” and “cubicle” stories show patterns as a **compression language**: you can say “Strategy” or “Observer” and communicate a set of structural expectations, constraints, and tradeoffs (pp.26–28).
 
 ---
 
@@ -54,9 +54,9 @@ The “diner” and “cubicle” stories show patterns as a **compression langu
 ### 3.1 Initial design (works… until requirements change)
 
 In the initial SimUDuck design, there is:
-
+[Here](https://claude.ai/public/artifacts/2575ad58-e8f0-4397-9f1e-c8cb08f3c5ce)
 - A superclass `Duck` that implements common behavior like `quack()` and `swim()`.
-- Subclasses such as `MallardDuck` and `RedheadDuck` that implement `display()` differently (p.2). fileciteturn0file0
+- Subclasses such as `MallardDuck` and `RedheadDuck` that implement `display()` differently (p.2).
 
 Conceptually:
 
@@ -81,7 +81,7 @@ This is classic OO reuse: shared behavior in the superclass, variation in subcla
 
 ## 4) The “change” event: “Make the ducks fly”
 
-The executives demand flying ducks (p.3). fileciteturn0file0  
+The executives demand flying ducks (p.3).  
 Joe (the developer) decides to add `fly()` to the `Duck` superclass so all ducks “inherit it”.
 
 ### 4.1 What goes wrong: “non-local side effects”
@@ -92,7 +92,7 @@ Not all ducks should fly:
 - Decoy ducks (wooden) do not fly and may not quack.
 
 When `fly()` is placed in the superclass, *every* duck inherits it.  
-The PDF illustrates the demo disaster: rubber ducks flying across the screen (p.4). fileciteturn0file0
+The PDF illustrates the demo disaster: rubber ducks flying across the screen (p.4).
 
 **Key lesson:** changing a superclass can produce **unexpected effects** in far-away subclasses.
 
@@ -102,7 +102,7 @@ The PDF illustrates the demo disaster: rubber ducks flying across the screen (p.
 
 ## 5) “Fix” attempt #1: override behavior in special subclasses
 
-Joe considers overriding `fly()` to “do nothing” inside non-flying ducks (p.5). fileciteturn0file0
+Joe considers overriding `fly()` to “do nothing” inside non-flying ducks (p.5).
 
 ### 5.1 Why this does not scale
 
@@ -119,7 +119,7 @@ This is a symptom of **inheritance being used as a behavior configuration mechan
 
 ## 6) “Fix” attempt #2: use interfaces `Flyable` and `Quackable`
 
-Joe proposes removing `fly()` from `Duck` and instead using `Flyable` / `Quackable` so only relevant ducks implement those (p.6). fileciteturn0file0
+Joe proposes removing `fly()` from `Duck` and instead using `Flyable` / `Quackable` so only relevant ducks implement those (p.6).
 
 ### 6.1 What improves
 
@@ -128,7 +128,7 @@ Joe proposes removing `fly()` from `Duck` and instead using `Flyable` / `Quackab
 
 ### 6.2 What breaks
 
-The PDF points out the new problem: **duplicate code** (p.7). fileciteturn0file0
+The PDF points out the new problem: **duplicate code** (p.7).
 
 Because Java interfaces (in the traditional sense) don’t provide shared implementation (ignoring modern default methods), every `Flyable` duck must implement flying itself.
 
@@ -150,7 +150,7 @@ These principles are explicitly called out in the PDF and are the conceptual bri
 
 ### 7.1 Principle 1 — Encapsulate what varies
 
-> Identify aspects that vary and separate them from what stays the same (p.9). fileciteturn0file0
+> Identify aspects that vary and separate them from what stays the same (p.9).
 
 In SimUDuck, the parts that vary are:
 
@@ -170,13 +170,13 @@ So we **extract** the variable behaviors into separate modules.
 - Fewer unintended consequences from changes.
 - Easier extension: add a new behavior without editing old duck classes.
 
-The PDF diagram on p.10 shows “pulling out” `fly` and `quack` into separate behavior class structures. fileciteturn0file0
+The PDF diagram on p.10 shows “pulling out” `fly` and `quack` into separate behavior class structures.
 
 ---
 
 ### 7.2 Principle 2 — Program to a supertype, not an implementation
 
-The PDF clarifies “interface” here means **supertype**, not necessarily the Java `interface` keyword (p.12). fileciteturn0file0
+The PDF clarifies “interface” here means **supertype**, not necessarily the Java `interface` keyword (p.12).
 
 **Idea:** the context should depend on *capabilities* and *contracts*, not concrete classes.
 
@@ -192,7 +192,7 @@ This enables polymorphism and reduces coupling.
 
 ### 7.3 Principle 3 — Favor composition over inheritance
 
-The PDF highlights a HAS‑A relationship: a duck **has a** fly behavior and **has a** quack behavior; it **delegates** to them (p.23). fileciteturn0file0
+The PDF highlights a HAS‑A relationship: a duck **has a** fly behavior and **has a** quack behavior; it **delegates** to them (p.23).
 
 **Inheritance** is an IS‑A relationship (“a MallardDuck is-a Duck”).  
 **Composition** is a HAS‑A relationship (“a Duck has-a FlyBehavior”).
@@ -207,7 +207,7 @@ Composition allows you to:
 
 ## 8) Strategy Pattern: intent and structure
 
-### 8.1 Intent (paraphrased)
+### 8.1 Intent
 
 The Strategy pattern:
 
@@ -215,7 +215,7 @@ The Strategy pattern:
 - encapsulates each algorithm in its own class (or function object),
 - lets clients (contexts) choose and swap algorithms without changing client code.
 
-This is introduced explicitly as the “first pattern” applied to SimUDuck (p.24). fileciteturn0file0
+This is introduced explicitly as the “first pattern” applied to SimUDuck (p.24).
 
 ### 8.2 Core roles (terminology)
 
@@ -249,7 +249,8 @@ FlyWithWings FlyNoWay            Quack   Squeak  MuteQuack
 FlyRocketPowered
 ```
 
-This matches the “big picture” diagram of encapsulated behaviors in the PDF (p.22). fileciteturn0file0
+This matches the “big picture” diagram of encapsulated behaviors in the PDF (p.22).
+
 
 ---
 
@@ -264,7 +265,7 @@ This section is designed as a guided walkthrough.
 
 Everything else stays mostly stable.
 
-(See analysis on pp.9–10.) fileciteturn0file0
+(See analysis on pp.9–10.)
 
 ---
 
@@ -330,7 +331,7 @@ public class MuteQuack implements QuackBehavior {
 }
 ```
 
-The PDF shows this split into “families” of behaviors (p.13) and later explicitly calls them a “family of algorithms” (p.22). fileciteturn0file0
+The PDF shows this split into “families” of behaviors (p.13) and later explicitly calls them a “family of algorithms” (p.22).
 
 ---
 
@@ -360,7 +361,7 @@ public abstract class Duck {
 }
 ```
 
-This corresponds to the “integrating behavior” explanation and the `performQuack()` delegation on p.15. fileciteturn0file0
+This corresponds to the “integrating behavior” explanation and the `performQuack()` delegation on p.15.
 
 ---
 
@@ -383,10 +384,10 @@ public class MallardDuck extends Duck {
 }
 ```
 
-The PDF walks through this idea using `MallardDuck` construction (p.16). fileciteturn0file0
+The PDF walks through this idea using `MallardDuck` construction (p.16).
 
-> Teaching note: this still instantiates concrete strategies in the constructor.  
-> The PDF explicitly calls out that this is not ideal and hints that later patterns (e.g., factories/DI) can improve strategy creation (p.17). fileciteturn0file0
+> This still instantiates concrete strategies in the constructor.  
+> The PDF explicitly calls out that this is not ideal and hints that later patterns (e.g., factories/DI) can improve strategy creation (p.17).
 
 ---
 
@@ -404,7 +405,7 @@ public void setQuackBehavior(QuackBehavior qb) {
 }
 ```
 
-This is demonstrated via `ModelDuck` and “rocket-powered flying” in the PDF (pp.20–21). fileciteturn0file0
+This is demonstrated via `ModelDuck` and “rocket-powered flying” in the PDF (pp.20–21).
 
 #### Example context subtype: a model duck starts grounded
 
@@ -457,7 +458,7 @@ Expected behavior: the model duck initially cannot fly, then it gains rocket fli
 
 A single `FlyWithWings` can be reused by any “winged” duck without putting code in the superclass.
 
-The PDF emphasizes you get reuse “without the baggage” of inheritance (p.13). fileciteturn0file0
+The PDF emphasizes you get reuse “without the baggage” of inheritance (p.13).
 
 ### 10.3 Open-Closed Principle (informal)
 
@@ -470,11 +471,11 @@ The setter-based approach creates a plug-in behavior model:
 - configure once (constructor),
 - or adapt at runtime (setters).
 
-The PDF explicitly highlights runtime switching (pp.11 and 20–21). fileciteturn0file0
+The PDF explicitly highlights runtime switching (pp.11 and 20–21).
 
 ---
 
-## 11) Tradeoffs and pitfalls (important for teaching)
+## 11) Tradeoffs and pitfalls
 
 Strategy is not “free”. It introduces costs and design choices.
 
@@ -499,9 +500,111 @@ Mitigations:
 - Use functional strategies (lambdas) in languages that support it.
 - Merge truly equivalent strategies.
 
+#### Strategy Pattern with Functional Strategies (Lambdas)
+
+In modern languages that support **first-class functions** (Java 8+, Kotlin, C#, JavaScript, etc.), we can implement the Strategy Pattern without creating separate concrete classes.
+
+Instead of defining:
+
+- one interface  
+- multiple concrete strategy classes  
+
+we can define:
+
+- one functional interface  
+- multiple **lambda expressions** representing interchangeable behaviors  
+
+This preserves the core Strategy definition:
+
+> The Strategy Pattern defines a family of algorithms, encapsulates each one, and makes them interchangeable.
+
+The difference is only **how** we represent the algorithms — not the pattern itself.
+
+---
+
+#### 1. Classic Strategy (Class-Based)
+
+```java
+public interface PaymentStrategy {
+    void pay(long amount);
+}
+
+public class CreditCardPayment implements PaymentStrategy {
+    @Override
+    public void pay(long amount) {
+        System.out.println("Paying by credit card: " + amount);
+    }
+}
+```
+
+Each algorithm is implemented as a separate class.
+
+---
+
+#### 2. Functional Strategy (Lambda-Based)
+
+If the strategy interface has **exactly one abstract method**, it is a **functional interface**.
+
+```java
+@FunctionalInterface
+public interface PaymentStrategy {
+    void pay(long amount);
+}
+```
+
+Now we can replace concrete classes with lambdas:
+
+```java
+PaymentStrategy creditCard = amount ->
+    System.out.println("Paying by credit card: " + amount);
+
+PaymentStrategy bankTransfer = amount ->
+    System.out.println("Paying by bank transfer: " + amount);
+```
+
+No concrete classes are needed.
+
+The algorithm is now represented as a function object.
+
+---
+
+#### 3. Context Using Functional Strategy
+
+The context does not change.
+
+```java
+public class CheckoutService {
+
+    private PaymentStrategy strategy;
+
+    public void setStrategy(PaymentStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public void checkout(long total) {
+        strategy.pay(total);
+    }
+}
+```
+
+Usage:
+
+```java
+CheckoutService checkout = new CheckoutService();
+
+checkout.setStrategy(amount ->
+    System.out.println("Paying with crypto: " + amount));
+
+checkout.checkout(500);
+```
+
+The behavior is interchangeable at runtime — exactly as Strategy requires.
+
+---
+
 ### 11.3 Who owns strategy creation?
 
-Constructors like `new FlyWithWings()` in `MallardDuck` couple a duck subtype to a concrete strategy class (the PDF calls this out on p.17). fileciteturn0file0
+Constructors like `new FlyWithWings()` in `MallardDuck` couple a duck subtype to a concrete strategy class (the PDF calls this out on p.17).
 
 Better alternatives (advanced, but worth mentioning):
 - dependency injection (DI),
@@ -558,16 +661,16 @@ These are useful in class to generalize beyond ducks.
 
 ## 13) In-class exercise: “Weapons” design puzzle (Strategy again)
 
-The PDF includes a second scenario: an action adventure game with characters that can change weapons dynamically (p.25). fileciteturn0file0
+The PDF includes a second scenario: an action adventure game with characters that can change weapons dynamically (p.25).
 
-### 13.1 Problem statement (paraphrased)
+### 13.1 Problem statement
 
 - There are character types: `King`, `Queen`, `Knight`, `Troll`.
 - Each character uses **one weapon at a time**.
 - A character can **switch weapons during the game**.
 - Weapon behaviors include: sword, knife, axe, bow-and-arrow.
 
-### 13.2 What students should draw / implement
+### 13.2 Draw / Implement
 
 1. An abstract `Character` class (context)
 2. A `WeaponBehavior` interface (strategy)
@@ -593,9 +696,9 @@ Concrete contexts:
   King, Queen, Knight, Troll  (extend Character)
 ```
 
-The provided solution in the PDF confirms this structure and that weapon can be swapped via `setWeapon` defined on the abstract `Character` superclass (p.34). fileciteturn0file0
+The provided solution in the PDF confirms this structure and that weapon can be swapped via `setWeapon` defined on the abstract `Character` superclass (p.34).
 
-### 13.4 Skeleton code for the lab
+### 13.4 Skeleton code
 
 ```java
 public interface WeaponBehavior {
@@ -636,12 +739,12 @@ public class King extends Character {
 }
 ```
 
-> Teaching point: the PDF notes that **any object** could implement `WeaponBehavior`, not only “weapons” in a literal sense (p.34). fileciteturn0file0  
+> Teaching point: the PDF notes that **any object** could implement `WeaponBehavior`, not only “weapons” in a literal sense (p.34).  
 > This is a good moment to emphasize: strategies are “algorithms”, not “things”.
 
 ---
 
-## 14) Discussion prompts (ready-to-use)
+## 14) Discussion prompts
 
 ### 14.1 Why did inheritance fail for flying?
 
@@ -660,7 +763,6 @@ Prompt (based on p.8): list real drivers of change, for example:
 - platform / protocol updates,
 - refactoring from lessons learned.
 
-Have students list **their own** examples and map them to “varying modules”.
 
 ### 14.3 Pattern vocabulary: when is it useful?
 
@@ -681,7 +783,7 @@ In SimUDuck, which two behaviors were extracted into strategy families?
 - C) fly and display  
 - D) quack and swim
 
-**Answer:** B. (pp.9–10) fileciteturn0file0
+**Answer:** B. (pp.9–10)
 
 ### Q2
 What relationship best describes the Strategy pattern between context and strategy?
@@ -691,21 +793,21 @@ What relationship best describes the Strategy pattern between context and strate
 - C) Strategy HAS-A Context  
 - D) Context IMPLEMENTS Strategy
 
-**Answer:** B. (pp.22–23) fileciteturn0file0
+**Answer:** B. (pp.22–23)
 
 ### Q3
 Why can “interfaces only” lead to duplication in this case?
 
-**Answer:** because each implementing class must provide its own code for the behavior; updating a behavior requires edits across many classes (p.7). fileciteturn0file0
+**Answer:** because each implementing class must provide its own code for the behavior; updating a behavior requires edits across many classes (p.7).
 
 ### Q4
 True/False: The phrase “program to an interface” means you must use the `interface` keyword in Java.
 
-**Answer:** False. It means “program to a supertype” (p.12). fileciteturn0file0
+**Answer:** False. It means “program to a supertype” (p.12).
 
 ---
 
-## 16) Cheat sheet (for students)
+## 16) Cheat sheet
 
 ### When to reach for Strategy
 
@@ -731,32 +833,5 @@ Use Strategy if:
 
 ---
 
-## 17) Appendix: “Sharpen your pencil” — inheritance disadvantages
 
-The PDF includes a multiple-choice reflection (p.5) asking which disadvantages can occur when subclassing is used to provide behavior. fileciteturn0file0
 
-A good summary answer (instructor phrasing) is:
-
-- **Duplication** appears when you override the same behavior in many subclasses.
-- **Runtime swapping** is difficult because behavior is tied to class type.
-- Adding new features (e.g., “make ducks dance”) can require edits across many subclasses.
-- Changes in shared code can have **unintended side effects** in subclasses.
-
-(An explicit checkbox solution is shown in the PDF’s “Solutions” page (p.35). fileciteturn0file0)
-
----
-
-## 18) Appendix: Suggested 75–90 minute lecture flow
-
-1. **Motivation (10 min)**: change is constant; patterns are experience reuse; patterns as vocabulary (pp.1, 8, 26–28). fileciteturn0file0
-2. **SimUDuck failure modes (15 min)**: inheritance pitfalls (pp.3–5). fileciteturn0file0
-3. **Principles (15 min)**: encapsulate what varies; program to a supertype; favor composition (pp.9–13, 23). fileciteturn0file0
-4. **Strategy implementation (25 min)**: code walkthrough + UML (pp.15–22). fileciteturn0file0
-5. **Weapons puzzle (15 min)**: group activity (p.25), then show solution discussion (p.34). fileciteturn0file0
-6. **Wrap-up (5 min)**: tradeoffs + cheat sheet.
-
----
-
-## 19) Source
-
-W2_Strategy.pdf fileciteturn0file0
