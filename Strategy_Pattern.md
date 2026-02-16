@@ -1,7 +1,5 @@
 # Strategy Pattern — Detailed Lecture Notes (English)
 
-_Source material: **W2_Strategy.pdf** fileciteturn0file0_
-
 ---
 
 ## 0) What this document is
