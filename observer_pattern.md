@@ -2,7 +2,6 @@
 
 ## CENG431 – Software Engineering | Week 3 Lecture Notes
 
-**Öğr. Gör. Yusuf Evren Aykaç**
 **Ankara Yıldırım Beyazıt University – Department of Computer Engineering**
 
 ---
