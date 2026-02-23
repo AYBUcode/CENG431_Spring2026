@@ -141,26 +141,26 @@ Key characteristics:
 ### 4.1 General Structure
 
 ```
-┌─────────────────────┐         observers        ┌──────────────────┐
-│    <<interface>>     │◆───────────────────────▷│   <<interface>>   │
-│      Subject         │                          │     Observer      │
-├─────────────────────┤                          ├──────────────────┤
+┌─────────────────────┐         observers         ┌──────────────────┐
+│    <<interface>>     │◆───────────────────────▷│   <<interface>>  │
+│      Subject         │                          │     Observer     │
+├──────────────────────┤                          ├──────────────────┤
 │ registerObserver()   │                          │ update()         │
 │ removeObserver()     │                          └──────────────────┘
 │ notifyObservers()    │                                   △
-└─────────────────────┘                                   │
+└─────────────────────┘                                    │
           △                                                │
           │                            ┌───────────────────┤
           │                            │                   │
 ┌─────────────────────┐   subject  ┌──────────────────┐   │
-│  ConcreteSubject     │◁──────────│ ConcreteObserver  │   │
-├─────────────────────┤           ├──────────────────┤   │
+│  ConcreteSubject     │◁──────────│ ConcreteObserver │   │
+├──────────────────────┤           ├──────────────────┤   │
 │ registerObserver()   │           │ update()         │   │
 │ removeObserver()     │           │ // other methods │   │
 │ notifyObservers()    │           └──────────────────┘   │
-│ getState()           │                                   │
+│ getState()           │                                  │
 │ setState()           │           ┌──────────────────┐   │
-└─────────────────────┘           │ AnotherObserver   │───┘
+└─────────────────────┘            │ AnotherObserver  │───┘
                                    ├──────────────────┤
                                    │ update()         │
                                    └──────────────────┘
