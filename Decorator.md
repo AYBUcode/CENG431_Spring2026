@@ -609,14 +609,7 @@ CONCRETE COMPONENTS                                ABSTRACT DECORATOR
                                                        InputStream    InputStream  InputStream InputStream
 ```
 
-**Rollerin eşleşmesi (Pattern → Java I/O):**
 
-| Decorator Pattern Rolü | Java I/O Karşılığı | Açıklama |
-|---|---|---|
-| Abstract Component | `InputStream` | Tüm stream'lerin ortak arayüzü |
-| Concrete Component | `FileInputStream`, `StringBufferInputStream`, `ByteArrayInputStream` | Asıl veri kaynakları |
-| Abstract Decorator | `FilterInputStream` | InputStream'i extend eder **ve** bir InputStream referansı tutar (HAS-A) |
-| Concrete Decorator | `PushbackInputStream`, `BufferedInputStream`, `DataInputStream`, `LineNumberInputStream` | Her biri tek bir sorumluluk ekler |
 
 Here is the translation into English, maintained in a technical and academic style suitable for computer science contexts:
 
